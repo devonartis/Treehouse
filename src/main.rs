@@ -36,42 +36,47 @@ fn what_is_your_name() -> String {
 
 fn main() {
     
-    println!("Hello, what's your name");
-    //let mut allow_them_in = false;
-    let name = what_is_your_name();
-    
-    let visitor_list = [
+    let mut visitor_list = vec![
         Visitor::new("divine","Hello Divine,  enjoy the rust house"),
         Visitor::new("steve", "Hi Steve, Your milk is in the fridge"),
         Visitor::new("s.johnson", "Stacie, I am so glad you have made it"),
     ];
-   
-    //println!("{:?}",visitor_list);
 
-    
-    let known_visitor = visitor_list
+
+    loop {
+        
+        println!("Hello, what's your name ? (Leave empty and press enter to quit");
+        
+        let name = what_is_your_name();
+        
+        let known_visitor = visitor_list
         .iter()
         .find(|visitor| visitor.name == name);
 
-    match known_visitor {
-        Some(visitor) => visitor.greet_vistor(),
-        None => println!("You are not on the visitor list. Please leave !!!")
-    }
-    
-    //println!("{:?}", &known_visitor);
+        match known_visitor {
+            Some(visitor) => visitor.greet_vistor(),
 
-    /*
-    for visitor in &vistor_list {
-          if visitor == &name {
-              allow_them_in = true;
-          }
-    }
-    
-    if allow_them_in {
-        println!("Welcome to my Treehouse, {}", name);
-    }else {
-        println!("Sorry, you aren't on the list.");
+            None => {
+                if name.is_empty() {
+                    break;
+                } else {
+                    println!("{} is not on the visitor list.", name);
+                    visitor_list.push(Visitor::new(&name, "New Friend"));
+                }
+            }
+        }
+        
+        
+
+
+      
     }
 
-    */
+    println!("The final list of visitors: ");
+    println!("{:#?}", visitor_list);
+    
+    
+    
+    
+    
 }
